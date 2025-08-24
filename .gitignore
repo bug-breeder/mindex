@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# Editor files
+.vscode/
+.idea/
+.DS_Store
+
+# Testing
+coverage/
+test-results/
+playwright-report/
+
+# Lock files (keep yarn.lock, ignore others)
+package-lock.json
+pnpm-lock.yaml
+
+# Temporary files
+.cache/
+.tmp/
