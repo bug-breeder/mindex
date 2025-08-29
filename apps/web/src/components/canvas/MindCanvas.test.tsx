@@ -35,8 +35,8 @@ describe('MindCanvas', () => {
     const { container } = render(<MindCanvas />)
     
     const canvasContainer = container.firstChild as HTMLElement
-    expect(canvasContainer).toHaveClass('bg-background')
-    expect(canvasContainer).toHaveClass('text-foreground')
+    expect(canvasContainer).toHaveClass('h-full')
+    expect(canvasContainer).toHaveClass('w-full')
   })
 
   it('should initialize Mind-Elixir when mounted', async () => {

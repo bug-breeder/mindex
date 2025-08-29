@@ -371,18 +371,16 @@ export function FolderTree({ onClose }: FolderTreeProps) {
 
   if (isLoading) {
     return (
-      <div className="p-4">
-        <div className="animate-pulse space-y-3">
-          <div className="h-4 bg-default-200 rounded w-3/4"></div>
-          <div className="h-4 bg-default-200 rounded w-1/2"></div>
-          <div className="h-4 bg-default-200 rounded w-2/3"></div>
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center">
+          <div className="text-sm text-default-600">Loading...</div>
         </div>
       </div>
     )
   }
 
   const rootFolders = hierarchyData?.rootFolders || []
-  const rootMaps = hierarchyData?.allMindMaps.filter(map => !map.folder_id) || []
+  const rootMaps = hierarchyData?.allMindMaps?.filter(map => !map.folder_id) || []
 
   return (
     <div className="h-full flex flex-col">

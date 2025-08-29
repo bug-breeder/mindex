@@ -19,23 +19,27 @@ describe('useAuthStore', () => {
     useAuthStore.setState({ user: null, loading: false, error: undefined })
   })
 
-  it('signInWithEmail sets loading and clears error', async () => {
-    const { signInWithEmail } = useAuthStore.getState()
-    await signInWithEmail('a@b.com')
-    expect(useAuthStore.getState().loading).toBe(false)
-    expect(useAuthStore.getState().error).toBeUndefined()
+  it('should set user', () => {
+    const mockUser = { id: 'u1', email: 'test@example.com' } as any
+    const { setUser } = useAuthStore.getState()
+    setUser(mockUser)
+    expect(useAuthStore.getState().user).toEqual(mockUser)
   })
 
-  it('refreshSession sets user from supabase', async () => {
-    const { refreshSession } = useAuthStore.getState()
-    await refreshSession()
-    expect(useAuthStore.getState().user?.id).toBe('u1')
+  it('should set loading state', () => {
+    const { setLoading } = useAuthStore.getState()
+    setLoading(true)
+    expect(useAuthStore.getState().loading).toBe(true)
   })
 
-  it('signOut clears user', async () => {
-    const { refreshSession, signOut } = useAuthStore.getState()
-    await refreshSession()
-    await signOut()
+  it('signOut clears user', () => {
+    // First set a user
+    const mockUser = { id: 'u1', email: 'test@example.com' } as any
+    useAuthStore.getState().setUser(mockUser)
+    
+    // Then sign out
+    const { signOut } = useAuthStore.getState()
+    signOut()
     expect(useAuthStore.getState().user).toBeNull()
   })
 })

@@ -52,8 +52,10 @@ export function CreateFolderDialog({ isOpen, onClose, parentId }: CreateFolderDi
   const createFolder = useCreateFolder()
   const { data: folders } = useFolders()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e && e.preventDefault) {
+      e.preventDefault()
+    }
     
     if (!name.trim()) return
 
@@ -90,6 +92,8 @@ export function CreateFolderDialog({ isOpen, onClose, parentId }: CreateFolderDi
       onClose={handleClose}
       placement="center"
       backdrop="blur"
+      size="lg"
+      className="mx-4"
     >
       <ModalContent>
         <form onSubmit={handleSubmit}>
@@ -100,15 +104,23 @@ export function CreateFolderDialog({ isOpen, onClose, parentId }: CreateFolderDi
           <ModalBody className="space-y-4">
             {parentFolder && (
               <div className="text-sm text-default-600">
-                Creating folder in: <span className="font-medium">{parentFolder.name}</span>
+                Creating subfolder in: <span className="font-medium">{parentFolder.name}</span>
               </div>
             )}
             
             <Input
-              label="Folder Name"
+              label="Folder Name*"
               placeholder="Enter folder name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSubmit()
+                }
+                if (e.key === 'Escape') {
+                  handleClose()
+                }
+              }}
               isRequired
               autoFocus
             />
@@ -172,6 +184,7 @@ export function CreateFolderDialog({ isOpen, onClose, parentId }: CreateFolderDi
               color="primary"
               isLoading={createFolder.isPending}
               disabled={!name.trim()}
+              onPress={handleSubmit}
             >
               Create Folder
             </Button>

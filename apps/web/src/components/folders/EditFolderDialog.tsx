@@ -93,6 +93,8 @@ export function EditFolderDialog({ isOpen, onClose, folder }: EditFolderDialogPr
       onClose={handleClose}
       placement="center"
       backdrop="blur"
+      size="lg"
+      className="mx-4"
     >
       <ModalContent>
         <form onSubmit={handleSubmit}>

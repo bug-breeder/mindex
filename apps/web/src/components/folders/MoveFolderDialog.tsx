@@ -67,6 +67,8 @@ export function MoveFolderDialog({ isOpen, onClose, mindMap }: MoveFolderDialogP
       onClose={handleClose}
       placement="center"
       backdrop="blur"
+      size="lg"
+      className="mx-4"
     >
       <ModalContent>
         <ModalHeader>

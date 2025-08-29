@@ -56,7 +56,7 @@ export function NewMapDialog({ isOpen, onClose, folderId, folderName }: NewMapDi
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} placement="center">
+    <Modal isOpen={isOpen} onClose={handleClose} placement="center" size="lg" className="mx-4">
       <ModalContent>
         <ModalHeader>Create New Map</ModalHeader>
         <ModalBody>

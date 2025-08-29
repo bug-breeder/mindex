@@ -20,17 +20,17 @@ export function Dashboard({ onNewMap }: DashboardProps) {
     .slice(0, 6) || []
 
   return (
-    <div className="h-full w-full p-8 overflow-y-auto">
+    <div className="h-full w-full p-4 sm:p-8 overflow-y-auto">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome back</h1>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">Welcome back</h1>
           <p className="text-default-600">Continue working on your mind maps or start something new</p>
         </div>
 
         {/* Quick Actions */}
-        <div className="mb-8">
-          <div className="flex gap-4">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Button
               color="primary"
               size="lg"

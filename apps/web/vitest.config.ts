@@ -1,52 +1,61 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src'),
-      '@/components': resolve(__dirname, './src/components'),
-      '@/hooks': resolve(__dirname, './src/hooks'),
-      '@/stores': resolve(__dirname, './src/stores'),
-      '@/utils': resolve(__dirname, './src/utils'),
-      '@/types': resolve(__dirname, './src/types'),
-      '@/config': resolve(__dirname, './src/config'),
-      '@/providers': resolve(__dirname, './src/providers'),
-    },
-  },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
+    setupFiles: ['./src/test-setup.ts'],
     css: true,
+    reporters: ['verbose'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/',
+        'src/test-setup.ts',
+        '**/*.d.ts',
+        'dist/',
+        'build/',
+        'coverage/',
+        '**/__tests__/**',
+        '**/test/**',
+        '**/*.test.*',
+        '**/*.spec.*'
+      ],
       thresholds: {
         global: {
           branches: 80,
           functions: 80,
           lines: 80,
-          statements: 80,
-        },
-      },
-      exclude: [
-        'node_modules/',
-        'src/test/',
-        '**/*.d.ts',
-        '**/*.config.*',
-        'dist/',
-      ],
+          statements: 80
+        }
+      }
     },
-    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    // Test categorization
+    include: [
+      'src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      'src/**/__tests__/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+    ],
     exclude: [
       'node_modules/',
       'dist/',
+      '.idea/',
       '.git/',
-      '.cache/',
-      '**/*.e2e.{test,spec}.{js,ts,jsx,tsx}',
+      '.cache/'
     ],
+    // Mobile testing configuration
+    testTimeout: 10000,
+    hookTimeout: 10000,
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  define: {
+    'import.meta.vitest': 'undefined',
   },
 })

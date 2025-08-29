@@ -37,6 +37,8 @@ export function DeleteFolderDialog({ isOpen, onClose, folder }: DeleteFolderDial
       onClose={onClose}
       placement="center"
       backdrop="blur"
+      size="lg"
+      className="mx-4"
     >
       <ModalContent>
         <ModalHeader>
