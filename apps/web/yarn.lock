@@ -619,6 +619,30 @@
     "@react-aria/interactions" "3.25.4"
     "@react-types/shared" "3.31.0"
 
+"@heroui/card@^2.2.23":
+  version "2.2.23"
+  resolved "https://registry.yarnpkg.com/@heroui/card/-/card-2.2.23.tgz#fd216d045a6c18d161ea73ebb3a0bc06c5e77863"
+  integrity sha512-oMmZNr2/mGp/S+Ct8iyzAp4H+tLuT3G0dgHyRie7txj8en79RAy+yRPBYdSt3OpIWM/Zv9un3Dnxgmi/UGCo+A==
+  dependencies:
+    "@heroui/react-utils" "2.1.12"
+    "@heroui/ripple" "2.2.18"
+    "@heroui/shared-utils" "2.1.10"
+    "@heroui/use-aria-button" "2.2.18"
+    "@react-aria/focus" "3.21.0"
+    "@react-aria/interactions" "3.25.4"
+    "@react-types/shared" "3.31.0"
+
+"@heroui/chip@^2.2.20":
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/@heroui/chip/-/chip-2.2.20.tgz#c76a376b949d289bbe2d4a88dd396d891fba0eed"
+  integrity sha512-BTYXeMcSeBPOZEFk4MDGTrcML/NLYmQn+xdlSdiv9b2dM/gEq1hpTizt+kpvNH7kF6BSUxM6zJearIGUZ7gf5w==
+  dependencies:
+    "@heroui/react-utils" "2.1.12"
+    "@heroui/shared-icons" "2.1.10"
+    "@heroui/shared-utils" "2.1.10"
+    "@react-aria/focus" "3.21.0"
+    "@react-aria/interactions" "3.25.4"
+
 "@heroui/code@^2.2.18":
   version "2.2.18"
   resolved "https://registry.yarnpkg.com/@heroui/code/-/code-2.2.18.tgz#4d9156b7e6079f27bbbcde2a63cefdfdcf657b70"
@@ -716,7 +740,7 @@
     "@react-aria/focus" "3.21.0"
     "@react-types/link" "3.6.3"
 
-"@heroui/listbox@2.3.23":
+"@heroui/listbox@2.3.23", "@heroui/listbox@^2.3.23":
   version "2.3.23"
   resolved "https://registry.yarnpkg.com/@heroui/listbox/-/listbox-2.3.23.tgz#97f20d61e3fa262150cd794caf4c3d595379c981"
   integrity sha512-8lZupiqN6J7mNR9gbpz8kDRIdInUXrXc+anInxSDGbL7z+PYgnJ+dqice2yJyRZy/8eT5ZpTdfdV/aw9DluNyA==
@@ -886,7 +910,7 @@
     "@heroui/use-clipboard" "2.1.9"
     "@react-aria/focus" "3.21.0"
 
-"@heroui/spinner@2.2.21":
+"@heroui/spinner@2.2.21", "@heroui/spinner@^2.2.21":
   version "2.2.21"
   resolved "https://registry.yarnpkg.com/@heroui/spinner/-/spinner-2.2.21.tgz#ae14523d114764d046d119a9594e5af4be42b73e"
   integrity sha512-8rBUwVcVESlHfguRXkgC4p7UEymAAUL/E+nOCfqOHqr308bKhVrS2lSjfeRMBGEJqWLf3m5AMhRfwpRbcSVHWg==
@@ -941,6 +965,20 @@
     flat "^5.0.2"
     tailwind-merge "3.3.1"
     tailwind-variants "2.0.1"
+
+"@heroui/toast@^2.0.14":
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/@heroui/toast/-/toast-2.0.14.tgz#67d62d5dabd36d755e0ada7774ec7f77d9e61438"
+  integrity sha512-rYOIl+Nj9EfpBEbZ0fpRiZvKYMQrOntscvIQhQgxvCr3j/5AydKbkA2s+yncHxLj/eDoYaaCCZncbj/Q72ndkA==
+  dependencies:
+    "@heroui/react-utils" "2.1.12"
+    "@heroui/shared-icons" "2.1.10"
+    "@heroui/shared-utils" "2.1.10"
+    "@heroui/spinner" "2.2.21"
+    "@heroui/use-is-mobile" "2.2.12"
+    "@react-aria/interactions" "3.25.4"
+    "@react-aria/toast" "3.0.6"
+    "@react-stately/toast" "3.1.2"
 
 "@heroui/tooltip@2.2.21":
   version "2.2.21"
@@ -1312,6 +1350,16 @@
     "@react-types/shared" "^3.31.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/landmark@^3.0.5":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@react-aria/landmark/-/landmark-3.0.6.tgz#60805b4c4191525d843ac8d8a28f01ff6195096b"
+  integrity sha512-dMPBqJWTDAr3Lj5hA+XYDH2PWqtFghYy+y7iq7K5sK/96cub8hZEUjhwn+HGgHsLerPp0dWt293nKupAJnf4Vw==
+  dependencies:
+    "@react-aria/utils" "^3.30.1"
+    "@react-types/shared" "^3.32.0"
+    "@swc/helpers" "^0.5.0"
+    use-sync-external-store "^1.4.0"
+
 "@react-aria/listbox@3.14.7":
   version "3.14.7"
   resolved "https://registry.yarnpkg.com/@react-aria/listbox/-/listbox-3.14.7.tgz#079d40dc29f2601d4ceb894a9de0715e55e9c70f"
@@ -1410,6 +1458,20 @@
     "@react-types/textfield" "^3.12.4"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/toast@3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@react-aria/toast/-/toast-3.0.6.tgz#b0ed51d8c267f492083e75017cd85bd9af0073b8"
+  integrity sha512-PoCLWoZzdHIMYY0zIU3WYsHAHPS52sN1gzGRJ+cr5zogU8wwg8lwFZCvs/yql0IhQLsO930zcCXWeL/NsCMrlA==
+  dependencies:
+    "@react-aria/i18n" "^3.12.11"
+    "@react-aria/interactions" "^3.25.4"
+    "@react-aria/landmark" "^3.0.5"
+    "@react-aria/utils" "^3.30.0"
+    "@react-stately/toast" "^3.1.2"
+    "@react-types/button" "^3.13.0"
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/toggle@^3.12.0":
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/@react-aria/toggle/-/toggle-3.12.0.tgz#93e4037be4f52b3b8cf5e4f1e087184cf1afda4b"
@@ -1454,6 +1516,18 @@
     "@react-stately/flags" "^3.1.2"
     "@react-stately/utils" "^3.10.8"
     "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+    clsx "^2.0.0"
+
+"@react-aria/utils@^3.30.1":
+  version "3.30.1"
+  resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.30.1.tgz#9eb704d4193674816e1e0eab758b12c2d69d7b0b"
+  integrity sha512-zETcbDd6Vf9GbLndO6RiWJadIZsBU2MMm23rBACXLmpRztkrIqPEb2RVdlLaq1+GklDx0Ii6PfveVjx+8S5U6A==
+  dependencies:
+    "@react-aria/ssr" "^3.9.10"
+    "@react-stately/flags" "^3.1.2"
+    "@react-stately/utils" "^3.10.8"
+    "@react-types/shared" "^3.32.0"
     "@swc/helpers" "^0.5.0"
     clsx "^2.0.0"
 
@@ -1558,6 +1632,14 @@
     "@react-stately/utils" "^3.10.8"
     "@react-types/shared" "^3.32.0"
     "@swc/helpers" "^0.5.0"
+
+"@react-stately/toast@3.1.2", "@react-stately/toast@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@react-stately/toast/-/toast-3.1.2.tgz#0502040b6bd57479eaba1bca2f4c66e9e957e55a"
+  integrity sha512-HiInm7bck32khFBHZThTQaAF6e6/qm57F4mYRWdTq8IVeGDzpkbUYibnLxRhk0UZ5ybc6me+nqqPkG/lVmM42Q==
+  dependencies:
+    "@swc/helpers" "^0.5.0"
+    use-sync-external-store "^1.4.0"
 
 "@react-stately/toggle@3.9.0", "@react-stately/toggle@^3.9.0":
   version "3.9.0"
@@ -1800,6 +1882,13 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
+
+"@ssshooter/modern-screenshot@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@ssshooter/modern-screenshot/-/modern-screenshot-4.5.0.tgz#58dce778eac9e1f90dbb3247f71bcb94a6da1d0e"
+  integrity sha512-/aAXhXOW1lyooUu8KlSvpe3nBvqEOZCL8OXUZ/g4A3nwEiMfGpqY3gBkaxIUUr2k/3dh51vh9u66oTIQ/Eq+1A==
+  dependencies:
+    mind-elixir "^4.2.0"
 
 "@supabase/auth-js@2.71.1":
   version "2.71.1"
@@ -4055,6 +4144,11 @@ min-indent@^1.0.0:
   resolved "https://registry.yarnpkg.com/min-indent/-/min-indent-1.0.1.tgz#a63f681673b30571fbe8bc25686ae746eefa9869"
   integrity sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==
 
+mind-elixir@^4.2.0:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/mind-elixir/-/mind-elixir-4.6.2.tgz#22d9c541830a748ec26123f31f2ac395a634ed07"
+  integrity sha512-KjIjInLbMtW7J68Hm+oJ/+g/fhG+h6kkJkU5HL1LgqLSIyKFQM4V5xogibbqm+9ycBmKu2TTOlE+5O2/3VZPtA==
+
 mind-elixir@^5.0.6:
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/mind-elixir/-/mind-elixir-5.0.6.tgz#aa2539c46147954d1e18344ef4cf7b96e4620b52"
@@ -5230,6 +5324,11 @@ use-latest@^1.2.1:
   integrity sha512-mhg3xdm9NaM8q+gLT8KryJPnRFOz1/5XPBhmDEVZK1webPzDjrPk7f/mbpeLqTgB9msytYWANxgALOCJKnLvcQ==
   dependencies:
     use-isomorphic-layout-effect "^1.1.1"
+
+use-sync-external-store@^1.4.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.5.0.tgz#55122e2a3edd2a6c106174c27485e0fd59bcfca0"
+  integrity sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==
 
 util-deprecate@^1.0.2:
   version "1.0.2"

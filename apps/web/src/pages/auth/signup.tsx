@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useSignUp } from '@/api/auth'
 import { Button } from '@heroui/button'
 import { Input } from '@heroui/input'
-import DefaultLayout from '@/layouts/default'
+import AppLayout from '@/layouts/AppLayout'
 
 export default function SignUpPage() {
   const navigate = useNavigate()
@@ -33,7 +33,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <DefaultLayout>
+    <AppLayout>
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
         <div className="w-full max-w-md p-8 border border-outline rounded-lg bg-surface">
           <div className="mb-6">
@@ -129,6 +129,6 @@ export default function SignUpPage() {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </AppLayout>
   )
 }

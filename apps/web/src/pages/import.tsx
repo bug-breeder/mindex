@@ -1,8 +1,8 @@
-import DefaultLayout from '@/layouts/default'
+import AppLayout from '@/layouts/AppLayout'
 
 export default function ImportPage() {
   return (
-    <DefaultLayout>
+    <AppLayout>
       <div className="flex flex-col gap-6 p-6 max-w-2xl mx-auto">
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-2">Import Content</h1>
@@ -45,6 +45,6 @@ export default function ImportPage() {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </AppLayout>
   )
 }

@@ -1,4 +1,4 @@
-import DefaultLayout from '@/layouts/default'
+import AppLayout from '@/layouts/AppLayout'
 import { ThemeSwitch } from '@/components/theme'
 import { useUIStore } from '@/stores/uiStore'
 import { Select, SelectItem } from '@heroui/select'
@@ -7,7 +7,7 @@ export default function SettingsPage() {
   const { theme, setTheme } = useUIStore()
 
   return (
-    <DefaultLayout>
+    <AppLayout>
       <div className="flex flex-col gap-6 p-6 max-w-2xl mx-auto">
         <div>
           <h1 className="text-3xl font-bold mb-2">Settings</h1>
@@ -70,6 +70,6 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </AppLayout>
   )
 }

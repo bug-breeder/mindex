@@ -1,23 +1,26 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import DefaultLayout from '@/layouts/default'
-import { Button } from '@heroui/button'
+import AppLayout from '@/layouts/AppLayout'
+import { Spinner } from '@heroui/spinner'
 import { MindCanvas } from '@/components/canvas'
 import { KeyboardHandler } from '@/components/keyboard'
-import { ExportDialog } from '@/components/export'
 import { useMapStore } from '@/stores/mapStore'
 import { useMap, useSaveMap } from '@/api/maps'
 import type { MindMapJson } from '@/stores/mapStore'
 
 export default function MapEditorPage() {
   const { id } = useParams<{ id: string }>()
-  const { map, setMap, canUndo, canRedo, undo, redo } = useMapStore()
-  const [mindElixirInstance, setMindElixirInstance] = useState<any>(null)
-  const [isExportDialogOpen, setIsExportDialogOpen] = useState(false)
+  const { map, setMap } = useMapStore()
+  const [, setMindElixirInstance] = useState<any>(null)
   
   // Fetch map from Supabase
   const { data: mapData, isLoading, error } = useMap(id || '')
   const saveMapMutation = useSaveMap()
+
+  // Get title and folder from URL params if provided
+  const urlParams = new URLSearchParams(window.location.search)
+  const titleFromUrl = urlParams.get('title')
+  const folderIdFromUrl = urlParams.get('folderId')
 
   // Load map data from Supabase or create new map
   useEffect(() => {
@@ -27,7 +30,7 @@ export default function MapEditorPage() {
       // Create new map if it doesn't exist
       const newMap: MindMapJson = {
         id: id,
-        title: 'New Mind Map',
+        title: titleFromUrl || 'New Mind Map',
         root: {
           id: 'root',
           topic: 'Mind Map',
@@ -60,15 +63,22 @@ export default function MapEditorPage() {
       }
       setMap(newMap)
     }
-  }, [mapData, isLoading, id, setMap])
+  }, [mapData, isLoading, id, setMap, titleFromUrl])
 
   // Auto-save when map changes
   useEffect(() => {
     if (!map || !id) return
     
     const timeoutId = setTimeout(() => {
+      // Include folder ID only for new maps (when coming from URL params)
+      const saveData: { id: string; map: MindMapJson; folderId?: string } = { id, map }
+      if (folderIdFromUrl && !mapData) {
+        // This is a new map being created with a folder assignment
+        saveData.folderId = folderIdFromUrl
+      }
+      
       saveMapMutation.mutate(
-        { id, map },
+        saveData,
         {
           onSuccess: () => {
             console.log('Map auto-saved successfully')
@@ -81,101 +91,40 @@ export default function MapEditorPage() {
     }, 1000) // Debounce auto-save by 1 second
     
     return () => clearTimeout(timeoutId)
-  }, [map, id, saveMapMutation])
-
-  const handleExport = () => {
-    setIsExportDialogOpen(true)
-  }
+  }, [map, id, saveMapMutation, folderIdFromUrl, mapData])
 
   if (isLoading) {
     return (
-      <DefaultLayout>
+      <AppLayout>
         <div className="flex items-center justify-center h-full">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-on-surface/70">Loading map...</p>
-          </div>
+          <Spinner />
         </div>
-      </DefaultLayout>
+      </AppLayout>
     )
   }
 
   if (error) {
     return (
-      <DefaultLayout>
-        <div className="flex items-center justify-center h-full">
-          <div className="text-center">
-            <p className="text-red-500 mb-4">Failed to load map</p>
-            <p className="text-on-surface/70 text-sm">{error.message}</p>
+      <AppLayout>
+        <div className="flex items-center justify-center h-full text-center">
+          <div>
+            <p className="text-danger mb-2">Failed to load map</p>
+            <p className="text-default-500 text-sm">{error.message}</p>
           </div>
         </div>
-      </DefaultLayout>
+      </AppLayout>
     )
   }
 
   return (
     <KeyboardHandler>
-      <DefaultLayout>
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-outline bg-surface">
-            <div className="flex items-center gap-4">
-              <h1 className="text-xl font-semibold text-on-surface">
-                {map?.title || 'Mind Map Editor'}
-              </h1>
-              <span className="text-sm text-on-surface/70">Map ID: {id}</span>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <Button 
-                size="sm"
-                variant="bordered"
-                onPress={undo}
-                isDisabled={!canUndo()}
-                title="Undo (Ctrl+Z)"
-              >
-                Undo
-              </Button>
-              <Button 
-                size="sm"
-                variant="bordered"
-                onPress={redo}
-                isDisabled={!canRedo()}
-                title="Redo (Ctrl+Shift+Z)"
-              >
-                Redo
-              </Button>
-              <Button 
-                size="sm"
-                variant="bordered"
-                onPress={handleExport}
-              >
-                Export
-              </Button>
-              <div className="px-3 py-1 text-sm text-on-surface/70">
-                {saveMapMutation.isPending ? 'Saving...' : 'Auto-saved'}
-              </div>
-            </div>
-          </div>
-          
-          {/* Canvas Area */}
-          <div className="flex-1 relative">
-            <MindCanvas 
-              data={map} 
-              className="w-full h-full" 
-              onInstanceReady={setMindElixirInstance}
-            />
-          </div>
-        </div>
-        
-        {/* Export Dialog */}
-        <ExportDialog
-          isOpen={isExportDialogOpen}
-          onClose={() => setIsExportDialogOpen(false)}
-          map={map}
-          mindElixirInstance={mindElixirInstance}
+      <AppLayout>
+        <MindCanvas 
+          data={map} 
+          className="w-full h-full" 
+          onInstanceReady={setMindElixirInstance}
         />
-      </DefaultLayout>
+      </AppLayout>
     </KeyboardHandler>
   )
 }
