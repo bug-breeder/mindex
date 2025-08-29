@@ -1,4 +1,4 @@
-# Architecture — MindCanvas
+# Architecture — Mindex
 
 ## Overview
 - **Frontend**: React + Vite, Tailwind + HeroUI, Zustand store, React Query, Mind‑Elixir canvas.

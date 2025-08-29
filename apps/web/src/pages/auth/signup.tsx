@@ -59,13 +59,16 @@ export default function SignUpPage() {
               isRequired
               variant="bordered"
               endContent={
-                <button
-                  className="focus:outline-none text-on-surface/50 hover:text-on-surface"
+                <Button
+                  isIconOnly
+                  variant="light"
+                  size="sm"
                   type="button"
-                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                  aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
                 >
                   {isPasswordVisible ? '🙈' : '👁️'}
-                </button>
+                </Button>
               }
             />
 
@@ -83,13 +86,16 @@ export default function SignUpPage() {
                   : ""
               }
               endContent={
-                <button
-                  className="focus:outline-none text-on-surface/50 hover:text-on-surface"
+                <Button
+                  isIconOnly
+                  variant="light"
+                  size="sm"
                   type="button"
-                  onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+                  onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
+                  aria-label={isConfirmPasswordVisible ? 'Hide password' : 'Show password'}
                 >
                   {isConfirmPasswordVisible ? '🙈' : '👁️'}
-                </button>
+                </Button>
               }
             />
 

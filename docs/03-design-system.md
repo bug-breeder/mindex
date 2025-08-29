@@ -1,29 +1,30 @@
-# Design System — Material 3 (Expressive) via Tailwind
+# Design System — Clean, Modern, Minimalist (Tailwind + HeroUI)
 
 ## Principles
-- **Legible** content-first canvas, minimal chrome
-- **Direct manipulation**: nodes feel tactile with subtle motion/elevation
-- **Expressive color** accents for branches; accessible by default
+- **Clean**: content-first canvas with minimal chrome
+- **Modern**: subtle motion, consistent spacing, clear hierarchy
+- **Minimalist**: restrained color, purposeful typography
+- **Responsive**: mobile-first layouts that scale gracefully
 
 ## Tailwind Token Mapping
 Define CSS variables (light/dark) then map to Tailwind theme.
 
 ```css
 :root {
-  --md-sys-color-primary: #6750A4;
-  --md-sys-color-on-primary: #FFFFFF;
-  --md-sys-color-surface: #FFFBFE;
-  --md-sys-color-on-surface: #1D1B20;
-  --md-sys-color-outline: #79747E;
-  --md-sys-elevation-1: 0 1px 2px rgba(0,0,0,.08);
-  --radius-l: 16px;
+  --color-primary: #7C3AED;
+  --color-on-primary: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-on-surface: #0F172A;
+  --color-outline: #CBD5E1;
+  --elevation-1: 0 1px 2px rgba(2,6,23,.06);
+  --radius-l: 12px;
 }
 [data-theme="dark"] {
-  --md-sys-color-primary: #D0BCFF;
-  --md-sys-color-on-primary: #371E73;
-  --md-sys-color-surface: #1C1B1F;
-  --md-sys-color-on-surface: #E6E1E5;
-  --md-sys-color-outline: #938F99;
+  --color-primary: #A78BFA;
+  --color-on-primary: #1E1B4B;
+  --color-surface: #0B1020;
+  --color-on-surface: #E2E8F0;
+  --color-outline: #334155;
 }
 ```
 
@@ -33,16 +34,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "var(--md-sys-color-primary)",
-        surface: "var(--md-sys-color-surface)",
+        primary: "var(--color-primary)",
+        surface: "var(--color-surface)",
         on: {
-          primary: "var(--md-sys-color-on-primary)",
-          surface: "var(--md-sys-color-on-surface)",
+          primary: "var(--color-on-primary)",
+          surface: "var(--color-on-surface)",
         },
-        outline: "var(--md-sys-color-outline)",
+        outline: "var(--color-outline)",
       },
       boxShadow: {
-        m1: "var(--md-sys-elevation-1)",
+        m1: "var(--elevation-1)",
       },
       borderRadius: {
         lg: "var(--radius-l)",
@@ -74,5 +75,5 @@ export default {
 
 ## Theming
 - Branch palettes choose accessible contrasting colors automatically.
-- “Expressive” title typography and rounded, soft shapes on nodes.
+- Neutral surfaces, clear contrast, gentle rounded corners.
 

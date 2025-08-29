@@ -1,14 +1,14 @@
-# MindCanvas — Product Docs
+# Mindex — Product Docs
 **Date:** 2025-08-24
 
-These documents define the product specs, architecture, design system, data model, APIs, LLM pipeline, roadmap, and acceptance criteria for **MindCanvas** — a web app that converts web pages, YouTube videos, PDFs, and DOC/DOCX into editable mind maps. The app emphasizes a **beautiful, simple, modern UI** inspired by **Material 3 (Expressive)** and an implementation stack of **React + Vite**, **Tailwind CSS**, **HeroUI**, **Zustand**, **TanStack React Query**, **Mind‑Elixir**, **Yarn**, and a **Supabase** backend (Auth, Postgres, Storage, Edge Functions).
+These documents define the product specs, architecture, design system, data model, APIs, LLM pipeline, roadmap, and acceptance criteria for **Mindex** — a web app that converts web pages, YouTube videos, PDFs, and DOC/DOCX into editable mind maps. The UI is **clean, modern, minimalist, and fully responsive**, and the stack includes **React + Vite**, **Tailwind CSS**, **HeroUI**, **Zustand**, **TanStack React Query**, **Mind‑Elixir**, **Yarn**, and a **Supabase** backend (Auth, Postgres, Storage, Edge Functions).
 
 > Strategy: build a robust **renderer/editor** first (feature‑complete, delightful interactions), then layer in AI ingestion and outlining.
 
 ## What’s included
 - `01-product-spec.md` — goals, personas, UX, requirements, KPIs
 - `02-architecture.md` — system architecture, flows, sequences, security
-- `03-design-system.md` — Material 3 Expressive tokens mapped to Tailwind + component specs
+- `03-design-system.md` — Clean, modern, minimalist UI system mapped to Tailwind + component specs
 - `04-data-model.md` — Postgres schema (Supabase), JSON schemas, RLS
 - `05-api.md` — Edge Function endpoints + payload contracts
 - `06-llm-pipeline.md` — ingestion → chunking → outline construction → confidence
@@ -27,4 +27,10 @@ These documents define the product specs, architecture, design system, data mode
 6. Run `yarn dev` and open the Editor. Import a local PDF to test renderer (AI off).
 
 ## Naming
-“MindCanvas” is a codename. Rename freely—no code identifiers are coupled to this name.
+Project name: **Mindex**.
+
+## Development Approach
+All development follows **Test-Driven Development (TDD)**:
+1. Write failing tests first (Red)
+2. Implement the minimal code to pass (Green)
+3. Refactor with tests staying green (Refactor)

@@ -30,3 +30,7 @@ pnpm-lock.yaml
 # Temporary files
 .cache/
 .tmp/
+apps/supabase/.temp/
+
+# Aceternity UI Docs
+docs/aceternity_ui/

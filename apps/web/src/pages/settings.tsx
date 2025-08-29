@@ -1,6 +1,7 @@
 import DefaultLayout from '@/layouts/default'
 import { ThemeSwitch } from '@/components/theme'
 import { useUIStore } from '@/stores/uiStore'
+import { Select, SelectItem } from '@heroui/select'
 
 export default function SettingsPage() {
   const { theme, setTheme } = useUIStore()
@@ -11,7 +12,7 @@ export default function SettingsPage() {
         <div>
           <h1 className="text-3xl font-bold mb-2">Settings</h1>
           <p className="text-on-surface/70">
-            Customize your MindCanvas experience
+            Customize your Mindex experience
           </p>
         </div>
         
@@ -22,15 +23,19 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <label className="text-sm">Theme</label>
                 <div className="flex items-center gap-2">
-                  <select 
-                    value={theme}
-                    onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
-                    className="px-3 py-1 border border-outline rounded text-sm bg-surface"
+                  <Select
+                    aria-label="Theme"
+                    selectedKeys={[theme]}
+                    onSelectionChange={(keys) => {
+                      const key = Array.from(keys as Set<string>)[0] as 'light' | 'dark' | 'system'
+                      if (key) setTheme(key)
+                    }}
+                    className="min-w-[160px]"
                   >
-                    <option value="system">System</option>
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                  </select>
+                    <SelectItem key="system">System</SelectItem>
+                    <SelectItem key="light">Light</SelectItem>
+                    <SelectItem key="dark">Dark</SelectItem>
+                  </Select>
                   <ThemeSwitch />
                 </div>
               </div>
@@ -42,11 +47,11 @@ export default function SettingsPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm">Default Layout</label>
-                <select className="px-3 py-1 border border-outline rounded text-sm bg-surface">
-                  <option value="right-balanced">Right Balanced</option>
-                  <option value="left">Left</option>
-                  <option value="right">Right</option>
-                </select>
+                <Select aria-label="Default Layout" selectedKeys={["right-balanced"]} className="min-w-[180px]">
+                  <SelectItem key="right-balanced">Right Balanced</SelectItem>
+                  <SelectItem key="left">Left</SelectItem>
+                  <SelectItem key="right">Right</SelectItem>
+                </Select>
               </div>
             </div>
           </div>
@@ -56,10 +61,10 @@ export default function SettingsPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm">Default Mode</label>
-                <select className="px-3 py-1 border border-outline rounded text-sm bg-surface">
-                  <option value="extract">Extract</option>
-                  <option value="summarize">Summarize</option>
-                </select>
+                <Select aria-label="Default Mode" selectedKeys={["extract"]} className="min-w-[160px]">
+                  <SelectItem key="extract">Extract</SelectItem>
+                  <SelectItem key="summarize">Summarize</SelectItem>
+                </Select>
               </div>
             </div>
           </div>

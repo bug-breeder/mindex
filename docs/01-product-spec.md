@@ -1,4 +1,4 @@
-# Product Spec — MindCanvas
+# Product Spec — Mindex
 
 ## Vision
 Turn any long-form content into a **clear, editable mind map**. Start with a world‑class mind map **renderer/editor**; add **AI ingestion + outlining** that respects the source and keeps users in control.

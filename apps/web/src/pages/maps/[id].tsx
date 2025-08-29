@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import DefaultLayout from '@/layouts/default'
+import { Button } from '@heroui/button'
 import { MindCanvas } from '@/components/canvas'
 import { KeyboardHandler } from '@/components/keyboard'
 import { ExportDialog } from '@/components/export'
@@ -126,28 +127,31 @@ export default function MapEditorPage() {
             </div>
             
             <div className="flex items-center gap-2">
-              <button 
-                onClick={undo}
-                disabled={!canUndo()}
-                className="px-3 py-1 text-sm border border-outline rounded disabled:opacity-50 hover:bg-outline/10"
+              <Button 
+                size="sm"
+                variant="bordered"
+                onPress={undo}
+                isDisabled={!canUndo()}
                 title="Undo (Ctrl+Z)"
               >
-                ↶
-              </button>
-              <button 
-                onClick={redo}
-                disabled={!canRedo()}
-                className="px-3 py-1 text-sm border border-outline rounded disabled:opacity-50 hover:bg-outline/10"
+                Undo
+              </Button>
+              <Button 
+                size="sm"
+                variant="bordered"
+                onPress={redo}
+                isDisabled={!canRedo()}
                 title="Redo (Ctrl+Shift+Z)"
               >
-                ↷
-              </button>
-              <button 
-                onClick={handleExport}
-                className="px-3 py-1 text-sm border border-outline rounded hover:bg-outline/10"
+                Redo
+              </Button>
+              <Button 
+                size="sm"
+                variant="bordered"
+                onPress={handleExport}
               >
                 Export
-              </button>
+              </Button>
               <div className="px-3 py-1 text-sm text-on-surface/70">
                 {saveMapMutation.isPending ? 'Saving...' : 'Auto-saved'}
               </div>

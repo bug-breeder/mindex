@@ -1,5 +1,0 @@
----
-triple:          'arm64-apple-darwin'
-binary-path:     '/Users/alanguyen/Code/Others/mindex/apps/web/bin/program'
-relocations:     []
-...

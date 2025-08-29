@@ -50,13 +50,16 @@ export default function LoginPage() {
               isRequired
               variant="bordered"
               endContent={
-                <button
-                  className="focus:outline-none text-on-surface/50 hover:text-on-surface"
+                <Button
+                  isIconOnly
+                  variant="light"
+                  size="sm"
                   type="button"
-                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                  aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
                 >
                   {isPasswordVisible ? '🙈' : '👁️'}
-                </button>
+                </Button>
               }
             />
 

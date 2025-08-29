@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default'
 import { useMaps, useDeleteMap } from '@/api/maps'
 import { useAuthStore } from '@/stores/authStore'
 import { Button } from '@heroui/button'
+import { Button as IconButton } from '@heroui/button'
 
 export default function MapsPage() {
   const navigate = useNavigate()
@@ -88,13 +89,16 @@ export default function MapsPage() {
                       </p>
                     )}
                   </div>
-                  <button
-                    onClick={() => handleDeleteMap(map.id)}
-                    disabled={deleteMapMutation.isPending}
-                    className="text-red-500 hover:text-red-700 p-1 disabled:opacity-50"
+                  <IconButton 
+                    isIconOnly 
+                    variant="light" 
+                    color="danger"
+                    aria-label="Delete map"
+                    onPress={() => handleDeleteMap(map.id)}
+                    isDisabled={deleteMapMutation.isPending}
                   >
                     🗑️
-                  </button>
+                  </IconButton>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex gap-2">
