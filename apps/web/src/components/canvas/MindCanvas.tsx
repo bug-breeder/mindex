@@ -218,7 +218,7 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
       // Ensure data has proper Mind-Elixir structure
       // Mind-Elixir expects either raw node data or {nodeData: node}
       let nodeData;
-      if (data.root.nodeData) {
+      if (data?.root?.nodeData) {
         // Data is already wrapped
         nodeData = {
           nodeData: {
@@ -226,7 +226,7 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
             parent: null
           }
         };
-      } else {
+      } else if (data?.root) {
         // Data is raw node, wrap it
         nodeData = {
           nodeData: {
@@ -234,6 +234,10 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
             parent: null
           }
         };
+      } else {
+        // Fallback for missing data
+        console.error('No valid data.root found');
+        return;
       }
       
       console.log('Initializing with structured data:', nodeData);
@@ -284,7 +288,7 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
     } catch (error) {
       console.error('Error selecting node:', error);
     }
-  }, [selectedId, data.root, handleMapChange, handleSelection, onInstanceReady]);
+  }, [selectedId, data?.root, handleMapChange, handleSelection, onInstanceReady]);
 
   return (
     <div 
