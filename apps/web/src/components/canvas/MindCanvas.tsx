@@ -4,18 +4,45 @@ import "mind-elixir/style.css";
 import type { MindMapJson } from "@/stores/mapStore";
 import { useMapStore } from "@/stores/mapStore";
 
+// Mind-Elixir type definitions
+interface MindElixirInstance {
+  bus: {
+    addListener: (event: string, callback: (data: unknown) => void) => void;
+    removeListener: (event: string, callback: (data: unknown) => void) => void;
+  };
+  init: () => void;
+  destroy: () => void;
+  getData: () => MindMapJson;
+  refresh: () => void;
+  findNodeById: (id: string) => MindElixirNode | null;
+  selectNode: (node: MindElixirNode) => void;
+  exportPng: () => void;
+  exportSvg: () => void;
+}
+
+interface MindElixirNode {
+  id: string;
+  topic: string;
+  children?: MindElixirNode[];
+  parent?: MindElixirNode;
+}
+
+
+
+
+
 // We'll use MindElixir.new() to create proper data format
 
 
 interface MindCanvasProps {
   data?: MindMapJson | null;
   className?: string;
-  onInstanceReady?: (instance: any) => void;
+  onInstanceReady?: (instance: MindElixirInstance) => void;
 }
 
 export function MindCanvas({ data, className = "h-full w-full", onInstanceReady }: MindCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const instanceRef = useRef<any>(null);
+  const instanceRef = useRef<MindElixirInstance | null>(null);
   const { updateMap, select, selectedId } = useMapStore();
 
   const handleMapChange = useCallback(() => {
@@ -100,14 +127,14 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
       
       // Add event listeners for editing (only if we have callbacks)
       if (handleMapChange) {
-        me.bus.addListener('operation', (operation: any) => {
+        me.bus.addListener('operation', (operation: unknown) => {
           console.log('Operation detected:', operation);
           handleMapChange();
         });
       }
       
       if (handleSelection) {
-        me.bus.addListener('selectNodes', (nodes: any) => {
+        me.bus.addListener('selectNodes', (nodes: unknown) => {
           console.log('Node selection detected:', nodes);
           if (nodes && nodes.length > 0 && nodes[0].id) {
             handleSelection(nodes[0].id);
@@ -146,7 +173,7 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
         instanceRef.current = null;
       }
     };
-  }, []);
+  }, [data?.root, handleMapChange, handleSelection, onInstanceReady]);
 
   // Update data when it changes - recreate instance for reliability
   useEffect(() => {
@@ -215,14 +242,14 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
       
       // Add event listeners for editing (only if we have callbacks)
       if (handleMapChange) {
-        me.bus.addListener('operation', (operation: any) => {
+        me.bus.addListener('operation', (operation: unknown) => {
           console.log('Operation detected:', operation);
           handleMapChange();
         });
       }
       
       if (handleSelection) {
-        me.bus.addListener('selectNodes', (nodes: any) => {
+        me.bus.addListener('selectNodes', (nodes: unknown) => {
           console.log('Node selection detected:', nodes);
           if (nodes && nodes.length > 0 && nodes[0].id) {
             handleSelection(nodes[0].id);
@@ -238,7 +265,7 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
     } catch (error) {
       console.error('Error updating Mind-Elixir:', error);
     }
-  }, [data?.id]);
+  }, [data?.id, data?.root, handleMapChange, handleSelection, onInstanceReady]);
 
   // Handle external selection changes
   useEffect(() => {
@@ -257,7 +284,7 @@ export function MindCanvas({ data, className = "h-full w-full", onInstanceReady 
     } catch (error) {
       console.error('Error selecting node:', error);
     }
-  }, [selectedId]);
+  }, [selectedId, data.root, handleMapChange, handleSelection, onInstanceReady]);
 
   return (
     <div 

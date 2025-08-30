@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { FolderTree } from '@/components/sidebar/FolderTree'
 import { CreateFolderDialog } from '@/components/folders/CreateFolderDialog'
-import { MoveFolderDialog } from '@/components/folders/MoveFolderDialog'
+
 import { Dashboard } from '@/components/Dashboard'
 import * as foldersApi from '@/api/folders'
 import * as mapsApi from '@/api/maps'
@@ -164,7 +164,6 @@ describe('User Interactions', () => {
     // Complex dropdown testing removed - better suited for E2E tests
 
     it('should handle inline editing workflow', async () => {
-      const user = userEvent.setup()
       const mockUpdateTitle = vi.fn().mockResolvedValue({})
 
       vi.mocked(mapsApi.useUpdateMapTitle).mockReturnValue({
@@ -188,8 +187,6 @@ describe('User Interactions', () => {
 
   describe('Navigation Interactions', () => {
     it('should navigate to mind map when clicked', async () => {
-      const user = userEvent.setup()
-
       render(
         <TestWrapper>
           <FolderTree onClose={vi.fn()} />
@@ -422,8 +419,6 @@ describe('User Interactions', () => {
 
   describe('Loading States', () => {
     it('should show loading indicators during async operations', async () => {
-      const user = userEvent.setup()
-
       vi.mocked(foldersApi.useCreateFolder).mockReturnValue({
         mutateAsync: vi.fn(),
         isPending: true, // Loading state

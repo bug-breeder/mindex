@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { ThemeSwitch } from './ThemeSwitch'
 import { useUIStore } from '@/stores/uiStore'
 
@@ -81,8 +80,6 @@ describe('ThemeSwitch', () => {
   })
 
   it('should call setTheme when toggled to dark', async () => {
-    const user = userEvent.setup()
-    
     // For now, let's just test that the component renders correctly when theme changes
     // The actual HeroUI Switch interaction in tests is complex
     const { setTheme } = useUIStore()
@@ -99,8 +96,6 @@ describe('ThemeSwitch', () => {
   })
 
     it('should call setTheme when toggled to light', async () => {
-    const user = userEvent.setup()
-    
     vi.mocked(useUIStore).mockReturnValue({
       theme: 'dark',
       setTheme: mockSetTheme,

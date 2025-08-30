@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/authStore'
 import type { 
   Folder, 
+  MindMap,
   FolderWithChildren, 
   CreateFolderRequest, 
   UpdateFolderRequest,
@@ -92,7 +93,7 @@ export function useFolderHierarchy() {
         if (mindMap.folder_id) {
           const folder = folderMap.get(mindMap.folder_id)
           if (folder) {
-            folder.mindMaps!.push(mindMap as any)
+            folder.mindMaps!.push(mindMap)
           }
         }
       })
@@ -225,7 +226,7 @@ export function useMoveFolder() {
     }) => {
       if (!user) throw new Error('User not authenticated')
       
-      const updateData: any = {}
+      const updateData: Partial<Pick<Folder, 'parent_id' | 'sort_order'>> = {}
       if (newParentId !== undefined) updateData.parent_id = newParentId
       if (sortOrder !== undefined) updateData.sort_order = sortOrder
       
@@ -272,7 +273,7 @@ export function useCreateDefaultFolders() {
 }
 
 // Helper function to build folder tree for UI
-export function buildFolderTree(folders: Folder[], mindMaps: any[] = []): FolderTreeItem[] {
+export function buildFolderTree(folders: Folder[], mindMaps: MindMap[] = []): FolderTreeItem[] {
   const folderMap = new Map<string, FolderTreeItem>()
   const rootItems: FolderTreeItem[] = []
 

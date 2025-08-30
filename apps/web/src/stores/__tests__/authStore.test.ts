@@ -20,7 +20,7 @@ describe('useAuthStore', () => {
   })
 
   it('should set user', () => {
-    const mockUser = { id: 'u1', email: 'test@example.com' } as any
+    const mockUser = { id: 'u1', email: 'test@example.com' } as const
     const { setUser } = useAuthStore.getState()
     setUser(mockUser)
     expect(useAuthStore.getState().user).toEqual(mockUser)
@@ -34,7 +34,7 @@ describe('useAuthStore', () => {
 
   it('signOut clears user', () => {
     // First set a user
-    const mockUser = { id: 'u1', email: 'test@example.com' } as any
+    const mockUser = { id: 'u1', email: 'test@example.com' } as const
     useAuthStore.getState().setUser(mockUser)
     
     // Then sign out

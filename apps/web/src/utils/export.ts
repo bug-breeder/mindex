@@ -18,7 +18,15 @@ export function exportAsJSON(map: MindMapJson) {
 
 // Export map as OPML (Outline Processor Markup Language)
 export function exportAsOPML(map: MindMapJson) {
-  const convertNodeToOPML = (node: any, level = 0): string => {
+  interface MindMapNode {
+    topic?: string;
+    text?: string;
+    notes?: string;
+    url?: string;
+    children?: MindMapNode[];
+  }
+
+  const convertNodeToOPML = (node: MindMapNode, level = 0): string => {
     const indent = '  '.repeat(level + 2)
     const text = node.topic || node.text || 'Untitled'
     const notes = node.notes ? ` _note="${escapeXML(node.notes)}"` : ''
@@ -72,7 +80,12 @@ ${convertNodeToOPML(map.root)}
 }
 
 // Export map as PNG using Mind-Elixir's built-in functionality
-export function exportAsPNG(mindElixirInstance: any, filename?: string) {
+interface MindElixirInstance {
+  exportPng: (filename?: string) => void;
+  exportSvg: (filename?: string) => void;
+}
+
+export function exportAsPNG(mindElixirInstance: MindElixirInstance | null, filename?: string) {
   if (!mindElixirInstance || typeof mindElixirInstance.exportPng !== 'function') {
     console.error('Mind-Elixir instance not available or exportPng method missing')
     return
@@ -86,7 +99,7 @@ export function exportAsPNG(mindElixirInstance: any, filename?: string) {
 }
 
 // Export map as SVG using Mind-Elixir's built-in functionality  
-export function exportAsSVG(mindElixirInstance: any, filename?: string) {
+export function exportAsSVG(mindElixirInstance: MindElixirInstance | null, filename?: string) {
   if (!mindElixirInstance || typeof mindElixirInstance.exportSvg !== 'function') {
     console.error('Mind-Elixir instance not available or exportSvg method missing')
     return
@@ -101,7 +114,7 @@ export function exportAsSVG(mindElixirInstance: any, filename?: string) {
 
 // Convert map to Markdown format
 export function exportAsMarkdown(map: MindMapJson) {
-  const convertNodeToMarkdown = (node: any, level = 0): string => {
+  const convertNodeToMarkdown = (node: MindMapNode, level = 0): string => {
     const indent = '  '.repeat(level)
     const prefix = level === 0 ? '# ' : `${'#'.repeat(Math.min(level + 1, 6))} `
     const text = node.topic || node.text || 'Untitled'

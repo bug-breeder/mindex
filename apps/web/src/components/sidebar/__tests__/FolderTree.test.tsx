@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { FolderTree } from '../FolderTree'
@@ -102,15 +101,29 @@ describe('FolderTree', () => {
     mockUseFolderHierarchy.mockReturnValue({
       data: mockHierarchyData,
       isLoading: false,
-    } as any)
+      isError: false,
+      error: null,
+    } as ReturnType<typeof useFolderHierarchy>)
 
     mockUseDeleteMap.mockReturnValue({
       mutateAsync: mockDeleteMap,
-    } as any)
+      mutate: vi.fn(),
+      isPending: false,
+      isError: false,
+      error: null,
+      isSuccess: false,
+      reset: vi.fn(),
+    } as ReturnType<typeof useDeleteMap>)
 
     mockUseUpdateMapTitle.mockReturnValue({
       mutateAsync: mockUpdateMapTitle,
-    } as any)
+      mutate: vi.fn(),
+      isPending: false,
+      isError: false,
+      error: null,
+      isSuccess: false,
+      reset: vi.fn(),
+    } as ReturnType<typeof useUpdateMapTitle>)
   })
 
   it('should render folder tree structure', () => {
@@ -130,7 +143,9 @@ describe('FolderTree', () => {
     mockUseFolderHierarchy.mockReturnValue({
       data: undefined,
       isLoading: true,
-    } as any)
+      isError: false,
+      error: null,
+    } as ReturnType<typeof useFolderHierarchy>)
 
     render(
       <TestWrapper>
@@ -145,7 +160,9 @@ describe('FolderTree', () => {
     mockUseFolderHierarchy.mockReturnValue({
       data: { folders: [], rootMaps: [] },
       isLoading: false,
-    } as any)
+      isError: false,
+      error: null,
+    } as ReturnType<typeof useFolderHierarchy>)
 
     render(
       <TestWrapper>
@@ -158,8 +175,6 @@ describe('FolderTree', () => {
   })
 
   it('should expand and collapse folders', async () => {
-    const user = userEvent.setup()
-
     render(
       <TestWrapper>
         <FolderTree onClose={mockOnClose} />

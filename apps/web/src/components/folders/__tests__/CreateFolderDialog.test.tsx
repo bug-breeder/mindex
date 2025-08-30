@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { CreateFolderDialog } from '../CreateFolderDialog'
@@ -37,12 +37,20 @@ describe('CreateFolderDialog', () => {
         { id: '1', name: 'Parent Folder', description: 'Test parent' },
         { id: '2', name: 'Another Folder', description: 'Another test' },
       ],
-    } as any)
+      isLoading: false,
+      isError: false,
+      error: null,
+    } as ReturnType<typeof useFolders>)
 
     mockUseCreateFolder.mockReturnValue({
       mutateAsync: mockCreateFolder,
       isPending: false,
-    } as any)
+      mutate: vi.fn(),
+      isError: false,
+      error: null,
+      isSuccess: false,
+      reset: vi.fn(),
+    } as ReturnType<typeof useCreateFolder>)
   })
 
   it('should render dialog when open', () => {
@@ -201,7 +209,12 @@ describe('CreateFolderDialog', () => {
     mockUseCreateFolder.mockReturnValue({
       mutateAsync: mockCreateFolder,
       isPending: true,
-    } as any)
+      mutate: vi.fn(),
+      isError: false,
+      error: null,
+      isSuccess: false,
+      reset: vi.fn(),
+    } as ReturnType<typeof useCreateFolder>)
 
     render(
       <TestWrapper>

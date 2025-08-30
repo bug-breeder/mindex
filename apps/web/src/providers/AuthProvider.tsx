@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useAuth } from '@/api/auth'
 
 interface AuthProviderProps {

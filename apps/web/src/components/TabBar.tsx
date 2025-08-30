@@ -22,7 +22,7 @@ export function TabBar({ className = '' }: TabBarProps) {
   const [activeTabId, setActiveTabId] = useState<string | null>(null)
 
   // Extract map ID from current path
-  const currentMapId = location.pathname.match(/\/maps\/([^\/]+)/)?.[1]
+  const currentMapId = location.pathname.match(/\/maps\/([^/]+)/)?.[1]
   const { data: currentMap } = useMap(currentMapId || '')
 
   // Add current map to tabs when navigating
@@ -66,7 +66,7 @@ export function TabBar({ className = '' }: TabBarProps) {
         )
       )
     }
-  }, [currentMapId, currentMap?.title])
+  }, [currentMapId, currentMap])
 
   const closeTab = (tabId: string) => {
     setTabs(prevTabs => {

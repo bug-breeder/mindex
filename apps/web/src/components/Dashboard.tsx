@@ -5,6 +5,7 @@ import { Card, CardBody } from '@heroui/card'
 import { useMaps } from '@/api/maps'
 import { previewCache } from '@/utils/previewCache'
 import { PlusIcon } from '@heroicons/react/24/outline'
+import type { MindMap } from '@/types'
 
 interface DashboardProps {
   onNewMap: () => void
@@ -96,7 +97,7 @@ export function Dashboard({ onNewMap }: DashboardProps) {
   )
 }
 
-function RecentMapCard({ map, onClick }: { map: any, onClick: () => void }) {
+function RecentMapCard({ map, onClick }: { map: MindMap, onClick: () => void }) {
   const [preview, setPreview] = useState<string | null>(null)
   const [isLoadingPreview, setIsLoadingPreview] = useState(true)
 

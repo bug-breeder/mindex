@@ -79,12 +79,12 @@ beforeAll(() => {
     } else {
       // Clear any existing spy first
       if (vi.isMockFunction(global.URL.createObjectURL)) {
-        global.URL.createObjectURL.mockClear()
+        (global.URL.createObjectURL as unknown as { mockClear: () => void }).mockClear()
       } else {
         vi.spyOn(global.URL, 'createObjectURL').mockReturnValue('mocked-object-url')
       }
     }
-  } catch (error) {
+  } catch {
     // If we can't mock it, create a fallback
     Object.defineProperty(global, 'URL', {
       value: {
@@ -102,13 +102,13 @@ beforeAll(() => {
     } else if (!vi.isMockFunction(global.URL.revokeObjectURL)) {
       vi.spyOn(global.URL, 'revokeObjectURL').mockImplementation(() => {})
     }
-  } catch (error) {
+  } catch {
     // Fallback already handled in createObjectURL section
   }
 
   // Mock Blob constructor
-  global.Blob = vi.fn().mockImplementation((content, options) => ({
-    size: content ? content.reduce((acc, part) => acc + part.length, 0) : 0,
+  global.Blob = vi.fn().mockImplementation((content: unknown[], options?: BlobPropertyBag) => ({
+    size: content ? content.reduce((acc: number, part: unknown) => acc + ((part as { length?: number })?.length || 0), 0) : 0,
     type: options?.type || '',
   }))
 
@@ -133,7 +133,7 @@ beforeAll(() => {
             if (node && (node.nodeType !== undefined || node === this.root)) {
               originalSetter.call(this, node)
             }
-          } catch (error) {
+          } catch {
             // Silently ignore TreeWalker currentNode errors
           }
         },
@@ -162,8 +162,9 @@ beforeAll(() => {
   global.EventTarget.prototype.dispatchEvent = function(event) {
     try {
       return originalDispatchEvent.call(this, event)
-    } catch (error) {
-      if (error.message && error.message.includes('parameter 1 is not of type \'Event\'')) {
+    } catch (error: unknown) {
+      const errorObj = error as { message?: string }
+      if (errorObj?.message && errorObj.message.includes('parameter 1 is not of type \'Event\'')) {
         // Suppress invalid event dispatch errors from React Aria
         return true
       }
@@ -172,8 +173,42 @@ beforeAll(() => {
   }
 
   // Mock timers to prevent React Aria timing issues
-  global.requestAnimationFrame = vi.fn(cb => setTimeout(cb, 16))
-  global.cancelAnimationFrame = vi.fn(id => clearTimeout(id))
+  global.requestAnimationFrame = vi.fn((cb: FrameRequestCallback) => {
+    const timeoutId = setTimeout(cb, 16)
+    return timeoutId as unknown as number
+  })
+  global.cancelAnimationFrame = vi.fn((id: number) => clearTimeout(id))
+
+  // Mock DOM globals that React Aria might use
+  if (!global.Element) {
+    global.Element = class Element {
+      nodeType = 1
+      constructor() {}
+      contains() { return false }
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          width: 0,
+          height: 0,
+          x: 0,
+          y: 0,
+        }
+      }
+    } as typeof Element
+  }
+
+  if (!global.Node) {
+    global.Node = {
+      ELEMENT_NODE: 1,
+      TEXT_NODE: 3,
+      COMMENT_NODE: 8,
+      DOCUMENT_NODE: 9,
+      DOCUMENT_FRAGMENT_NODE: 11,
+    } as typeof Node
+  }
 
   // Mock HTMLCanvasElement.getContext for screenshot functionality
   HTMLCanvasElement.prototype.getContext = vi.fn(() => ({
@@ -184,16 +219,9 @@ beforeAll(() => {
     canvas: {
       toDataURL: vi.fn(() => 'data:image/png;base64,mock-image-data'),
     },
-  })) as any
+  }) as CanvasRenderingContext2D)
 
-  // Mock window.requestAnimationFrame
-  global.requestAnimationFrame = vi.fn((cb) => {
-    setTimeout(cb, 16)
-    return 1
-  })
-
-  // Mock window.cancelAnimationFrame
-  global.cancelAnimationFrame = vi.fn()
+  // Mock window.requestAnimationFrame and cancelAnimationFrame are already defined above
 
   // Mock fetch for API calls
   global.fetch = vi.fn()
@@ -220,20 +248,26 @@ beforeAll(() => {
     constructor(type: string, eventInitDict?: TouchEventInit) {
       super(type, eventInitDict)
     }
-  } as any
+  } as typeof TouchEvent
 
   // Mock PointerEvent for modern touch interactions
   global.PointerEvent = class PointerEvent extends Event {
     constructor(type: string, eventInitDict?: PointerEventInit) {
       super(type, eventInitDict)
     }
-  } as any
+  } as typeof PointerEvent
 })
 
 // Cleanup after each test
 afterEach(() => {
-  cleanup()
+  // Clear all timers to prevent React Aria focus issues
+  vi.clearAllTimers()
+  
+  // Clear all mocks
   vi.clearAllMocks()
+  
+  // Clean up React components
+  cleanup()
   
   // Reset localStorage
   if (window.localStorage && window.localStorage.clear) {
@@ -251,6 +285,11 @@ afterEach(() => {
     writable: true,
     configurable: true,
     value: 768,
+  })
+  
+  // Force garbage collection of any remaining async operations
+  return vi.runAllTimersAsync().catch(() => {
+    // Ignore any errors during cleanup
   })
 })
 
@@ -322,6 +361,6 @@ vi.mock('@heroui/system', () => ({
 
 // Polyfill for tests that might need it
 if (typeof window !== 'undefined') {
-  // @ts-ignore
+  // @ts-expect-error - Setting React testing environment flag
   window.IS_REACT_ACT_ENVIRONMENT = true
 }

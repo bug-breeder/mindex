@@ -1,4 +1,4 @@
-export const SunIcon = (props: any) => (
+export const SunIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     aria-hidden="true"
     focusable="false"
@@ -15,7 +15,7 @@ export const SunIcon = (props: any) => (
   </svg>
 );
 
-export const MoonIcon = (props: any) => (
+export const MoonIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     aria-hidden="true"
     focusable="false"

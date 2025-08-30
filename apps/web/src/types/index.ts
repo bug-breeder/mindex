@@ -33,9 +33,9 @@ export interface MindMap {
   id: string;
   title: string;
   description?: string;
-  root: any; // MindElixir JSON structure
-  theme?: any;
-  metadata?: any;
+  root: Record<string, unknown>; // MindElixir JSON structure
+  theme?: Record<string, unknown>;
+  metadata?: Record<string, unknown>;
   created_by: string;
   created_at: string;
   updated_at: string;
@@ -72,8 +72,8 @@ export interface Template {
   id: string;
   title: string;
   description?: string;
-  root: any;
-  theme?: any;
+  root: Record<string, unknown>;
+  theme?: Record<string, unknown>;
   category: string;
   tags: string[];
   created_by: string;

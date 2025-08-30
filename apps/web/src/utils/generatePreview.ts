@@ -24,7 +24,7 @@ export function generateMindMapPreview(mindMap: MindMapJson): string {
   const gradientId = `gradient-${mindMap.id}`
   const gradientColors = getThemeColors(mindMap.theme?.branchPalette)
   
-  let svg = `
+  const svg = `
     <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="${gradientId}" x1="0%" y1="0%" x2="100%" y2="100%">

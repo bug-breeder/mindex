@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
+  // @ts-expect-error - Plugin type compatibility issue with Vite/Vitest versions
   plugins: [react()],
   test: {
     globals: true,
@@ -10,6 +11,10 @@ export default defineConfig({
     setupFiles: ['./src/test-setup.ts'],
     css: true,
     reporters: ['verbose'],
+    // Use fake timers to prevent React Aria cleanup issues
+    fakeTimers: {
+      toFake: ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'setImmediate', 'clearImmediate']
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

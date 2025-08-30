@@ -382,7 +382,6 @@ describe('Folders API', () => {
         }),
       })
 
-      let callCount = 0
       vi.mocked(supabase).from = vi.fn().mockImplementation((table) => {
         if (table === 'folders') {
           return { select: mockFoldersSelect }

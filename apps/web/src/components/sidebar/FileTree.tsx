@@ -8,6 +8,7 @@ import { addToast } from '@heroui/toast'
 import { useMaps, useUpdateMapTitle, useDeleteMap, useMap } from '@/api/maps'
 import { XMarkIcon, EllipsisVerticalIcon } from '@heroicons/react/24/outline'
 import { previewCache } from '@/utils/previewCache'
+import type { MindMap } from '@/types'
 
 interface FileTreeProps {
   onClose?: () => void
@@ -15,7 +16,7 @@ interface FileTreeProps {
 
 // Component for individual map item with large preview and title below
 function MapItem({ map, onEdit, onDelete, onSelect }: {
-  map: any
+  map: MindMap
   onEdit: (id: string, title: string) => void
   onDelete: (id: string) => void
   onSelect: (id: string) => void
@@ -66,7 +67,7 @@ function MapItem({ map, onEdit, onDelete, onSelect }: {
   const handleDropdownAction = (action: string) => {
     switch (action) {
       case 'rename':
-        handleEditStart(new MouseEvent('click') as any)
+        handleEditStart(new MouseEvent('click') as React.MouseEvent)
         break
       case 'delete':
         onDelete(map.id)
@@ -195,7 +196,7 @@ export function FileTree({ onClose }: FileTreeProps) {
           <div className="text-sm text-default-500 py-4">Loading...</div>
         ) : maps && maps.length > 0 ? (
           <div className="space-y-3 px-2">
-            {maps.map((m: any) => (
+            {maps.map((m: MindMap) => (
               <MapItem
                 key={m.id}
                 map={m}

@@ -4,11 +4,17 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@herou
 import type { MindMapJson } from '@/stores/mapStore'
 import { exportAsJSON, exportAsOPML, exportAsMarkdown, exportAsPNG, exportAsSVG } from '@/utils/export'
 
+interface MindElixirInstance {
+  exportPng: () => void
+  exportSvg: () => void
+  getData: () => unknown
+}
+
 interface ExportDialogProps {
   isOpen: boolean
   onClose: () => void
   map: MindMapJson | null
-  mindElixirInstance?: any
+  mindElixirInstance?: MindElixirInstance | null
 }
 
 export function ExportDialog({ isOpen, onClose, map, mindElixirInstance }: ExportDialogProps) {

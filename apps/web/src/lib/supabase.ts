@@ -50,7 +50,7 @@ export interface Database {
           title: string
           source_type: 'web' | 'youtube' | 'pdf' | 'doc' | 'text' | 'blank'
           source_ref: string | null
-          map_json: any
+          map_json: Record<string, unknown>
           version: number
           is_public: boolean
           created_at: string
@@ -63,7 +63,7 @@ export interface Database {
           title: string
           source_type?: 'web' | 'youtube' | 'pdf' | 'doc' | 'text' | 'blank'
           source_ref?: string | null
-          map_json: any
+          map_json: Record<string, unknown>
           version?: number
           is_public?: boolean
           created_at?: string
@@ -76,7 +76,7 @@ export interface Database {
           title?: string
           source_type?: 'web' | 'youtube' | 'pdf' | 'doc' | 'text' | 'blank'
           source_ref?: string | null
-          map_json?: any
+          map_json?: Record<string, unknown>
           version?: number
           is_public?: boolean
           created_at?: string

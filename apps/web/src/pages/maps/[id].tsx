@@ -11,7 +11,7 @@ import type { MindMapJson } from '@/stores/mapStore'
 export default function MapEditorPage() {
   const { id } = useParams<{ id: string }>()
   const { map, setMap } = useMapStore()
-  const [, setMindElixirInstance] = useState<any>(null)
+  const [, setMindElixirInstance] = useState<unknown>(null)
   
   // Fetch map from Supabase
   const { data: mapData, isLoading, error } = useMap(id || '')
