@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { render, waitFor } from '@testing-library/react'
 import { MindCanvas } from './MindCanvas'
 import type { MindMapJson } from '@/stores/mapStore'

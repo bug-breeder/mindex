@@ -79,6 +79,17 @@ ${convertNodeToOPML(map.root)}
   URL.revokeObjectURL(url)
 }
 
+// Type definitions
+interface MindMapNode {
+  id?: string;
+  topic?: string;
+  text?: string;
+  notes?: string;
+  hyperLink?: string;
+  url?: string;
+  children?: MindMapNode[];
+}
+
 // Export map as PNG using Mind-Elixir's built-in functionality
 interface MindElixirInstance {
   exportPng: (filename?: string) => void;

@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { exportAsJSON, exportAsOPML, exportAsMarkdown, exportAsPNG, exportAsSVG } from './export'
 import type { MindMapJson } from '@/stores/mapStore'
 
@@ -124,7 +125,7 @@ describe('Export Utils', () => {
       exportAsOPML(testMap)
 
       expect(createBlobSpy).toHaveBeenCalled()
-      const blobContent = createBlobSpy.mock.calls[0][0][0]
+      const blobContent = createBlobSpy.mock.calls[0]?.[0]?.[0] as string
       
       expect(blobContent).toContain('<?xml version="1.0" encoding="UTF-8"?>')
       expect(blobContent).toContain('<opml version="2.0">')
@@ -149,7 +150,7 @@ describe('Export Utils', () => {
       const createBlobSpy = vi.spyOn(window, 'Blob')
       exportAsOPML(mapWithSpecialChars)
 
-      const blobContent = createBlobSpy.mock.calls[0][0][0]
+      const blobContent = createBlobSpy.mock.calls[0]?.[0]?.[0] as string
       expect(blobContent).toContain('&lt;special&gt;')
       expect(blobContent).toContain('&amp;')
       expect(blobContent).toContain('&quot;quoted&quot;')
@@ -174,7 +175,7 @@ describe('Export Utils', () => {
       exportAsMarkdown(testMap)
 
       expect(createBlobSpy).toHaveBeenCalled()
-      const markdownContent = createBlobSpy.mock.calls[0][0][0]
+      const markdownContent = createBlobSpy.mock.calls[0]?.[0]?.[0] as string
       
       expect(markdownContent).toContain('# Root Topic')
       expect(markdownContent).toContain('## Child 1')
@@ -199,7 +200,7 @@ describe('Export Utils', () => {
       const createBlobSpy = vi.spyOn(window, 'Blob')
       exportAsMarkdown(simpleMap)
 
-      const markdownContent = createBlobSpy.mock.calls[0][0][0]
+      const markdownContent = createBlobSpy.mock.calls[0]?.[0]?.[0] as string
       expect(markdownContent).toContain('# Simple Root')
       expect(markdownContent).toContain('## Simple Child')
       expect(markdownContent).not.toContain('[Link]')
@@ -207,21 +208,23 @@ describe('Export Utils', () => {
   })
 
   describe('exportAsPNG', () => {
-    it('should call Mind-Elixir exportPng method', () => {
+        it('should call Mind-Elixir exportPng method', () => {
       const mockInstance = {
-        exportPng: vi.fn()
+        exportPng: vi.fn(),
+        exportSvg: vi.fn()
       }
-
+      
       exportAsPNG(mockInstance, 'test.png')
 
       expect(mockInstance.exportPng).toHaveBeenCalledWith('test.png')
     })
 
-    it('should use default filename when none provided', () => {
+        it('should use default filename when none provided', () => {
       const mockInstance = {
-        exportPng: vi.fn()
+        exportPng: vi.fn(),
+        exportSvg: vi.fn()
       }
-
+      
       exportAsPNG(mockInstance)
 
       expect(mockInstance.exportPng).toHaveBeenCalledWith('mindmap.png')
@@ -239,21 +242,23 @@ describe('Export Utils', () => {
   })
 
   describe('exportAsSVG', () => {
-    it('should call Mind-Elixir exportSvg method', () => {
+        it('should call Mind-Elixir exportSvg method', () => {
       const mockInstance = {
+        exportPng: vi.fn(),
         exportSvg: vi.fn()
       }
-
+      
       exportAsSVG(mockInstance, 'test.svg')
 
       expect(mockInstance.exportSvg).toHaveBeenCalledWith('test.svg')
     })
 
-    it('should use default filename when none provided', () => {
+        it('should use default filename when none provided', () => {
       const mockInstance = {
+        exportPng: vi.fn(),
         exportSvg: vi.fn()
       }
-
+      
       exportAsSVG(mockInstance)
 
       expect(mockInstance.exportSvg).toHaveBeenCalledWith('mindmap.svg')

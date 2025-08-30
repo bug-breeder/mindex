@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom'
+import { vi } from 'vitest'
 
 // Mock Mind-Elixir for tests
 vi.mock('mind-elixir', () => {
@@ -55,7 +56,7 @@ window.ResizeObserver = vi.fn().mockImplementation(() => ({
   disconnect: vi.fn(),
 }))
 
-window.matchMedia = vi.fn().mockImplementation(query => ({
+window.matchMedia = vi.fn().mockImplementation((query: string) => ({
   matches: false,
   media: query,
   onchange: null,
@@ -71,7 +72,7 @@ window.URL.createObjectURL = vi.fn()
 window.URL.revokeObjectURL = vi.fn()
 
 // Mock Blob
-window.Blob = vi.fn().mockImplementation((content, options) => ({
+window.Blob = vi.fn().mockImplementation((content: unknown, options: unknown) => ({
   content,
   options,
   size: content?.[0]?.length || 0,
